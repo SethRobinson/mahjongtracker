@@ -1,0 +1,7 @@
+# GitHub Pages configuration
+encoding: UTF-8
+highlighter: rouge
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
