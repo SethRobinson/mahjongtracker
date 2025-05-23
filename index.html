@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mahjong Rankings</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1, h2 {
+      color: #333;
+      text-align: center;
+    }
+    .ranking-section {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th {
+      background-color: #4f81bd;
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-weight: bold;
+    }
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f0f0f0;
+    }
+    .flag-emoji {
+      font-size: 1.5em;
+      margin-right: 8px;
+      display: none; /* Hidden by default, shown when flag image fails */
+    }
+    .flag-image {
+      width: 24px;
+      height: 16px;
+      margin-right: 8px;
+      vertical-align: middle;
+      border: 1px solid #ddd;
+    }
+    .rank-1 { color: #FFD700; font-weight: bold; }
+    .rank-2 { color: #C0C0C0; font-weight: bold; }
+    .rank-3 { color: #CD7F32; font-weight: bold; }
+    .team-logo {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    .team-members {
+      font-size: 0.9em;
+      color: #666;
+    }
+    .update-time {
+      text-align: center;
+      color: #666;
+      font-size: 0.9em;
+      margin-top: 20px;
+    }
+    .nav-links {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .nav-links a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #4f81bd;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Mahjong Rankings</h1>
+    <div class="nav-links">
+      <a href="#four-player">4 Player Rankings</a>
+      <a href="#three-player">3 Player Rankings</a>
+      <a href="#team-rankings">Team Rankings</a>
+    </div>
+
+<div id="four-player" class="ranking-section">
+    <h2>4 Player Season Rankings</h2>
+    <table>
+      <thead>
+        <tr><th>Rank</th><th>Player</th><th>Score</th><th>Games</th><th>1st</th><th>2nd</th><th>3rd</th><th>4th</th></tr></thead><tbody><tr><td class="rank-1">1</td><td><img src="https://rtsoft.com/graphics/flags/png100px/rainbow.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Charlie</td><td>396.44999999999993</td><td>14</td><td>7</td><td>3</td><td>3</td><td>1</td></tr><tr><td class="rank-2">2</td><td><img src="https://rtsoft.com/graphics/flags/png100px/tw.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Sean</td><td>362</td><td>22</td><td>10</td><td>3</td><td>6</td><td>3</td></tr><tr><td class="rank-3">3</td><td><img src="https://rtsoft.com/graphics/flags/png100px/fr.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Sebastien</td><td>281.69999999999993</td><td>24</td><td>6</td><td>10</td><td>4</td><td>4</td></tr><tr><td>4</td><td><img src="https://rtsoft.com/graphics/flags/png100px/tw.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Tony</td><td>206.45000000000002</td><td>19</td><td>5</td><td>8</td><td>4</td><td>2</td></tr><tr><td>5</td><td><img src="https://rtsoft.com/graphics/flags/png100px/co.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Oscar</td><td>200.15000000000003</td><td>23</td><td>8</td><td>5</td><td>5</td><td>5</td></tr><tr><td>6</td><td><img src="https://rtsoft.com/graphics/flags/png100px/jp.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Kazu</td><td>188.00000000000003</td><td>5</td><td>3</td><td>1</td><td>1</td><td></td></tr><tr><td>7</td><td><img src="https://rtsoft.com/graphics/flags/png100px/jp.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Akiko</td><td>154.833</td><td>10</td><td>4</td><td>2</td><td>3</td><td>1</td></tr><tr><td>8</td><td><img src="https://rtsoft.com/graphics/flags/png100px/rt.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Seth</td><td>87.19999999999997</td><td>11</td><td>2</td><td>6</td><td>1</td><td>2</td></tr><tr><td>9</td><td><img src="https://rtsoft.com/graphics/flags/png100px/jp.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Shoko</td><td>65.5</td><td>2</td><td>1</td><td>1</td><td></td><td></td></tr><tr><td>10</td><td><img src="https://rtsoft.com/graphics/flags/png100px/jp.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Hiro worshiper</td><td>65</td><td>1</td><td>1</td><td></td><td></td><td></td></tr><tr><td>11</td><td><img src="https://rtsoft.com/graphics/flags/png100px/br.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Teo Ferreira</td><td>62.300000000000004</td><td>2</td><td>1</td><td>1</td><td></td><td></td></tr><tr><td>12</td><td><img src="https://rtsoft.com/graphics/flags/png100px/hk.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Michael Chen</td><td>61.75</td><td>7</td><td>3</td><td></td><td>3</td><td>1</td></tr><tr><td>13</td><td><img src="https://rtsoft.com/graphics/flags/png100px/us.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Mixed Seat</td><td>55</td><td>5</td><td>1</td><td>2</td><td>2</td><td></td></tr><tr><td>14</td><td><img src="https://rtsoft.com/graphics/flags/png100px/ua.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Nikita</td><td>52.29999999999999</td><td>8</td><td>3</td><td>1</td><td>3</td><td>1</td></tr><tr><td>15</td><td><img src="https://rtsoft.com/graphics/flags/png100px/us.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Linnea</td><td>49</td><td>2</td><td>1</td><td></td><td>1</td><td></td></tr><tr><td>16</td><td><img src="https://rtsoft.com/graphics/flags/png100px/th.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Surachada Chuaychob</td><td>45.3</td><td>1</td><td>1</td><td></td><td></td><td></td></tr><tr><td>17</td><td><img src="https://rtsoft.com/graphics/flags/png100px/jp.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>junya huruki</td><td>34.900000000000006</td><td>2</td><td></td><td>2</td><td></td><td></td></tr><tr><td>18</td><td><img src="https://rtsoft.com/graphics/flags/png100px/cl.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Diego Concha</td><td>19.4</td><td>1</td><td></td><td>1</td><td></td><td></td></tr><tr><td>19</td><td><img src="https://rtsoft.com/graphics/flags/png100px/jm.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Natk</td><td>12.599999999999994</td><td>3</td><td>1</td><td>1</td><td></td><td>1</td></tr><tr><td>20</td><td><img src="https://rtsoft.com/graphics/flags/png100px/jp.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Yumi</td><td>8.000000000000007</td><td>4</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>21</td><td><img src="https://rtsoft.com/graphics/flags/png100px/jp.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Koji Tanoue</td><td>1.0999999999999943</td><td>8</td><td>1</td><td>3</td><td>3</td><td>1</td></tr><tr><td>22</td><td><img src="https://rtsoft.com/graphics/flags/png100px/tw.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>yusin</td><td>0.5</td><td>2</td><td>1</td><td></td><td></td><td>1</td></tr><tr><td>23</td><td><img src="https://rtsoft.com/graphics/flags/png100px/jp.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>tasuku</td><td>-9</td><td>2</td><td></td><td>1</td><td>1</td><td></td></tr><tr><td>24</td><td><img src="https://rtsoft.com/graphics/flags/png100px/fr.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Tany</td><td>-11.85</td><td>2</td><td></td><td>1</td><td>1</td><td></td></tr><tr><td>25</td><td><img src="https://rtsoft.com/graphics/flags/png100px/jp.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>??</td><td>-18.000000000000014</td><td>8</td><td>3</td><td>1</td><td></td><td>4</td></tr><tr><td>26</td><td><img src="https://rtsoft.com/graphics/flags/png100px/my.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>WEI_YI_??</td><td>-26.999999999999993</td><td>20</td><td>4</td><td>5</td><td>7</td><td>4</td></tr><tr><td>27</td><td><img src="https://rtsoft.com/graphics/flags/png100px/cn.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Edwin</td><td>-30.1</td><td>2</td><td></td><td></td><td>2</td><td></td></tr><tr><td>28</td><td><img src="https://rtsoft.com/graphics/flags/png100px/jp.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Mona</td><td>-31.700000000000003</td><td>3</td><td>1</td><td></td><td>1</td><td>1</td></tr><tr><td>29</td><td><img src="https://rtsoft.com/graphics/flags/png100px/us.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Nassim Habbash</td><td>-34.35</td><td>2</td><td></td><td>1</td><td>1</td><td></td></tr><tr><td>30</td><td><img src="https://rtsoft.com/graphics/flags/png100px/id.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Kevin</td><td>-34.400000000000006</td><td>2</td><td></td><td>1</td><td></td><td>1</td></tr><tr><td>31</td><td><img src="https://rtsoft.com/graphics/flags/png100px/jp.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Sakura</td><td>-49.5</td><td>1</td><td></td><td></td><td></td><td>1</td></tr><tr><td>32</td><td><img src="https://rtsoft.com/graphics/flags/png100px/us.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Rui</td><td>-52.3</td><td>2</td><td></td><td>1</td><td></td><td>1</td></tr><tr><td>33</td><td><img src="https://rtsoft.com/graphics/flags/png100px/tw.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Howard Yao</td><td>-55.7</td><td>2</td><td></td><td>1</td><td></td><td>1</td></tr><tr><td>34</td><td><img src="https://rtsoft.com/graphics/flags/png100px/cn.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Andrew</td><td>-65.19999999999999</td><td>3</td><td>1</td><td></td><td></td><td>2</td></tr><tr><td>35</td><td><img src="https://rtsoft.com/graphics/flags/png100px/us.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Quinn Hackenberg</td><td>-66.39999999999999</td><td>6</td><td>1</td><td>2</td><td>1</td><td>2</td></tr><tr><td>36</td><td><img src="https://rtsoft.com/graphics/flags/png100px/fr.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Samar</td><td>-66.85000000000001</td><td>5</td><td></td><td>2</td><td>2</td><td>1</td></tr><tr><td>37</td><td><img src="https://rtsoft.com/graphics/flags/png100px/it.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Michael V</td><td>-67</td><td>2</td><td></td><td></td><td>1</td><td>1</td></tr><tr><td>38</td><td><img src="https://rtsoft.com/graphics/flags/png100px/au.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Jacson Lamb</td><td>-72</td><td>1</td><td></td><td></td><td></td><td>1</td></tr><tr><td>39</td><td><img src="https://rtsoft.com/graphics/flags/png100px/us.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Scott Luu</td><td>-73.4</td><td>2</td><td></td><td></td><td>1</td><td>1</td></tr><tr><td>40</td><td><img src="https://rtsoft.com/graphics/flags/png100px/sg.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Yak</td><td>-101.19999999999999</td><td>8</td><td>2</td><td>1</td><td>1</td><td>4</td></tr><tr><td>41</td><td><img src="https://rtsoft.com/graphics/flags/png100px/tw.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>???</td><td>-110.30000000000001</td><td>2</td><td></td><td></td><td></td><td>2</td></tr><tr><td>42</td><td><img src="https://rtsoft.com/graphics/flags/png100px/us.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Anastasiia</td><td>-117.69999999999999</td><td>8</td><td>1</td><td>2</td><td>2</td><td>3</td></tr><tr><td>43</td><td><img src="https://rtsoft.com/graphics/flags/png100px/ro.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Geo Opera</td><td>-123.65</td><td>4</td><td>1</td><td></td><td></td><td>3</td></tr><tr><td>44</td><td><img src="https://rtsoft.com/graphics/flags/png100px/gb.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Brendan</td><td>-125.6</td><td>8</td><td></td><td>3</td><td>3</td><td>2</td></tr><tr><td>45</td><td><img src="https://rtsoft.com/graphics/flags/png100px/jp.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Akira</td><td>-128.2</td><td>2</td><td></td><td></td><td></td><td>2</td></tr><tr><td>46</td><td><img src="https://rtsoft.com/graphics/flags/png100px/nl.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Carel</td><td>-292.6</td><td>13</td><td></td><td>1</td><td>9</td><td>3</td></tr><tr><td>47</td><td><img src="https://rtsoft.com/graphics/flags/png100px/nonbinary.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Claire</td><td>-312.85</td><td>10</td><td>1</td><td>1</td><td>3</td><td>5</td></tr><tr><td>48</td><td><img src="https://rtsoft.com/graphics/flags/png100px/us.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Victoria</td><td>-333.2300000000001</td><td>24</td><td>5</td><td>5</td><td>4</td><td>10</td></tr></tbody></table></div>
+<div id="three-player" class="ranking-section">
+    <h2>3 Player Season Rankings</h2>
+    <table>
+      <thead>
+        <tr><th>Rank</th><th>Player</th><th>Score</th><th>Games</th><th>1st</th><th>2nd</th><th>3rd</th></tr></thead><tbody><tr><td class="rank-1">1</td><td><img src="https://rtsoft.com/graphics/flags/png100px/nl.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Carel</td><td>74.63333333333333</td><td>1</td><td>1</td><td></td><td></td></tr><tr><td class="rank-2">2</td><td><img src="https://rtsoft.com/graphics/flags/png100px/jp.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Akiko</td><td>53.46666666666667</td><td>1</td><td>1</td><td></td><td></td></tr><tr><td class="rank-3">3</td><td><img src="https://rtsoft.com/graphics/flags/png100px/rt.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Seth</td><td>-30</td><td>2</td><td></td><td>2</td><td></td></tr><tr><td>4</td><td><img src="https://rtsoft.com/graphics/flags/png100px/tw.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>yusin</td><td>-44.53333333333333</td><td>1</td><td></td><td></td><td>1</td></tr><tr><td>5</td><td><img src="https://rtsoft.com/graphics/flags/png100px/ua.png" alt="??" class="flag-image" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span class="flag-emoji">??</span>Nikita</td><td>-53.56666666666666</td><td>1</td><td></td><td></td><td>1</td></tr></tbody></table></div>
+<div id="team-rankings" class="ranking-section">
+    <h2>Team Rankings (4 Player)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Team</th>
+          <th>Members</th>
+          <th>Total Score</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="rank-1">1</td>
+        <td><img src="https://mastodos-media.y-zu.org/accounts/avatars/110/672/728/040/508/212/original/0533281fe214fcc1.jpg" class="team-logo" alt="" style="width:30px; height:30px; margin-right:10px; vertical-align:middle; border-radius:4px;">Team C2</td>
+        <td class="team-members"></td>
+        <td>102</td>
+      </tr>
+    
+      <tr>
+        <td class="rank-2">2</td>
+        <td><img src="https://cdn-imgix.headout.com/tour/34038/TOUR-IMAGE/2ff12dac-3004-4b6c-8fe3-6b13b6bb8ce4-17845-osaka-hep-ferris-wheel-ticket--03.jpeg?w=1680&h=1050&crop=faces&auto=compress%2Cformat&fit=min" class="team-logo" alt="" style="width:30px; height:30px; margin-right:10px; vertical-align:middle; border-radius:4px;">Team Osaka</td>
+        <td class="team-members"></td>
+        <td>52.4</td>
+      </tr>
+    
+      <tr>
+        <td class="rank-3">3</td>
+        <td><img src="https://cdn.ila-france.com/wp-content/uploads/2016/11/6-ideas-french-culture.jpg" class="team-logo" alt="" style="width:30px; height:30px; margin-right:10px; vertical-align:middle; border-radius:4px;">The French</td>
+        <td class="team-members"></td>
+        <td>-60.4</td>
+      </tr>
+    </tbody></table></div>
+
+    <div class="update-time">
+      Last updated: 5/23/2025, 7:59:58 PM
+    </div>
+  </div>
+</body>
+</html>
