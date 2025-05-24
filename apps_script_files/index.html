@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <base target="_top">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 20px;
+      font-size: 14px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    .header-text {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #666;
+    }
+    form {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+    label {
+      margin-right: 10px;
+      white-space: nowrap;
+    }
+    select, input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .score-display {
+      grid-column: 1 / span 3;
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+      border-radius: 4px;
+    }
+    button {
+      grid-column: 1 / span 3;
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Add a Game</h2>
+    <p class="header-text">Enter the names and raw table scores. Leave the fourth name as "None" if it's a 3 player game.</p>
+    <form id="form">
+      <label for="playerA">Player A:</label>
+      <select id="playerA" name="playerA" onchange="updateScores()">
+        <option value="None">None</option>
+      </select>
+      <input type="number" id="scoreA" name="scoreA" placeholder="30000" oninput="debounceUpdateScores()">
+      
+      <label for="playerB">Player B:</label>
+      <select id="playerB" name="playerB" onchange="updateScores()">
+        <option value="None">None</option>
+      </select>
+      <input type="number" id="scoreB" name="scoreB" placeholder="30000" oninput="debounceUpdateScores()">
+      
+      <label for="playerC">Player C:</label>
+      <select id="playerC" name="playerC" onchange="updateScores()">
+        <option value="None">None</option>
+      </select>
+      <input type="number" id="scoreC" name="scoreC" placeholder="30000" oninput="debounceUpdateScores()">
+      
+      <label for="playerD">Player D:</label>
+      <select id="playerD" name="playerD" onchange="updateScores()">
+        <option value="None">None</option>
+      </select>
+      <input type="number" id="scoreD" name="scoreD" placeholder="30000" oninput="debounceUpdateScores()">
+      
+      <div class="score-display" id="calculatedScores">
+        <p>Calculated Scores:</p>
+        <p id="calculatedScoreA">Player A: 0.00</p>
+        <p id="calculatedScoreB">Player B: 0.00</p>
+        <p id="calculatedScoreC">Player C: 0.00</p>
+        <p id="calculatedScoreD">Player D: 0.00</p>
+      </div>
+      
+      <button type="button" id="submitButton" onclick="submitForm()">Submit</button>
+    </form>
+  </div>
+  
+  <script>
+    let updateTimer = null;
+    let isSubmitting = false;
+    
+    function debounceUpdateScores() {
+      clearTimeout(updateTimer);
+      updateTimer = setTimeout(updateScores, 300); // Wait 300ms after user stops typing
+    }
+    
+    function populatePlayers(players)
+    {
+      const playerSelects = document.querySelectorAll('select');
+      players.forEach(player => 
+      {
+        const [isActive, name, nickname] = player;
+        if (isActive) 
+        {
+          playerSelects.forEach(select => 
+          {
+            const option = document.createElement('option');
+            option.value = name;
+            option.text = nickname ? `${name} (${nickname})` : name;
+            select.appendChild(option);
+          });
+        }
+      });
+    }
+    
+    function updateScores()
+    {
+      const playerA = document.getElementById('playerA').value;
+      const playerB = document.getElementById('playerB').value;
+      const playerC = document.getElementById('playerC').value;
+      const playerD = document.getElementById('playerD').value;
+      
+      const scoreA = parseFloat(document.getElementById('scoreA').value) || 0;
+      const scoreB = parseFloat(document.getElementById('scoreB').value) || 0;
+      const scoreC = parseFloat(document.getElementById('scoreC').value) || 0;
+      const scoreD = parseFloat(document.getElementById('scoreD').value) || 0;
+
+      const playerScores = {};
+      if (playerA !== "None") playerScores[playerA] = scoreA;
+      if (playerB !== "None") playerScores[playerB] = scoreB;
+      if (playerC !== "None") playerScores[playerC] = scoreC;
+      if (playerD !== "None") playerScores[playerD] = scoreD;
+
+     google.script.run.withSuccessHandler(displayCalculatedScores).calculateMahjongScores(playerScores);
+    }
+
+    function displayCalculatedScores(scoreMap) 
+    {
+      const playerA = document.getElementById('playerA').value;
+      const playerB = document.getElementById('playerB').value;
+      const playerC = document.getElementById('playerC').value;
+      const playerD = document.getElementById('playerD').value;
+      
+      document.getElementById('calculatedScoreA').innerText = `${playerA}: ${scoreMap[playerA] || '0.00'}`;
+      document.getElementById('calculatedScoreB').innerText = `${playerB}: ${scoreMap[playerB] || '0.00'}`;
+      document.getElementById('calculatedScoreC').innerText = `${playerC}: ${scoreMap[playerC] || '0.00'}`;
+      document.getElementById('calculatedScoreD').innerText = `${playerD}: ${scoreMap[playerD] || '0.00'}`;
+    }
+
+    function submitForm() 
+    {
+      // Prevent double submission
+      if (isSubmitting) return;
+      isSubmitting = true;
+      
+      const formData = new FormData(document.getElementById('form'));
+      const data = {};
+      formData.forEach((value, key) => 
+      {
+        data[key] = value;
+      });
+      
+      // Transform the data to match server expectations
+      const gameData = {
+        date: new Date().toISOString(), // Convert to string for serialization
+        player1: data.playerA,
+        score1: data.scoreA,
+        player2: data.playerB, 
+        score2: data.scoreB,
+        player3: data.playerC,
+        score3: data.scoreC,
+        player4: data.playerD,
+        score4: data.scoreD
+      };
+      
+      google.script.run
+        .withSuccessHandler(function(result) {
+          // Close dialog immediately after game is added
+          google.script.host.close();
+          
+          // Then calculate rankings (will show toast notification)
+          google.script.run.showToastAndCalculateRankings();
+        })
+        .withFailureHandler(function(error) {
+          alert('Error adding game: ' + error.message);
+          isSubmitting = false;
+        })
+        .addGameAndUpdateRankings(gameData);
+    }
+    
+    google.script.run
+      .withSuccessHandler(populatePlayers)
+      .withFailureHandler(function(error) {
+        console.error('Error loading players:', error);
+        alert('Error loading players: ' + error.message);
+      })
+      .getPlayers();
+  </script>
+</body>
+</html>

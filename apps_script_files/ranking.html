@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <base target="_top">
+  </head>
+  <body>
+    <form>
+      <label for="startDate">Start Date:</label>
+      <input type="date" id="startDate" name="startDate"><br><br>
+      <label for="endDate">End Date:</label>
+      <input type="date" id="endDate" name="endDate"><br><br>
+      <input type="button" value="Generate Rankings" onclick="generateRankings()">
+    </form>
+    <script>
+      function generateRankings() 
+      {
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
+        google.script.run.generateMahjongRankings(startDate, endDate, "Custom Rankings");
+        google.script.host.close();
+
+      }
+    </script>
+  </body>
+</html>

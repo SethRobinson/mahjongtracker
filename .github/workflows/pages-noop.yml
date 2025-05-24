@@ -1,0 +1,14 @@
+name: No-op Pages Build
+
+on:
+  workflow_call:
+  push:
+    branches:
+      - main
+
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Do nothing
+        run: echo "This is a placeholder to silence GitHub Pages workflow errors" 

@@ -1,0 +1,5 @@
+token.pickle
+credentials.json
+*.pyc
+.claude/settings.local.json
+config.json

@@ -1,0 +1,48 @@
+{
+  "files": [
+    {
+      "name": "appsscript",
+      "type": "JSON"
+    },
+    {
+      "name": "menu",
+      "type": "SERVER_JS"
+    },
+    {
+      "name": "gameManagement",
+      "type": "SERVER_JS"
+    },
+    {
+      "name": "rankings",
+      "type": "SERVER_JS"
+    },
+    {
+      "name": "teams",
+      "type": "SERVER_JS"
+    },
+    {
+      "name": "htmlExport",
+      "type": "SERVER_JS"
+    },
+    {
+      "name": "github",
+      "type": "SERVER_JS"
+    },
+    {
+      "name": "utilities",
+      "type": "SERVER_JS"
+    },
+    {
+      "name": "debug",
+      "type": "SERVER_JS"
+    },
+    {
+      "name": "index",
+      "type": "HTML"
+    },
+    {
+      "name": "ranking",
+      "type": "HTML"
+    }
+  ]
+}
