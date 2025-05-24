@@ -366,6 +366,14 @@ function createNoJekyllFile(token, owner, repo) {
     // Check if .nojekyll exists
     var sha = getCurrentFileSha(token, owner, repo, '.nojekyll');
     
+    // If file already exists, skip creating it
+    if (sha) {
+      console.log('.nojekyll file already exists, skipping creation');
+      // Still check for _config.yml but don't update .nojekyll
+      createConfigFile(token, owner, repo);
+      return;
+    }
+    
     var payload = {
       "message": "Add .nojekyll file for proper GitHub Pages serving",
       "content": Utilities.base64Encode(Utilities.newBlob("").getBytes()), // Empty file
@@ -374,10 +382,6 @@ function createNoJekyllFile(token, owner, repo) {
         "email": "noreply@mahjong-rankings.com"
       }
     };
-    
-    if (sha) {
-      payload.sha = sha;
-    }
     
     var url = `https://api.github.com/repos/${owner}/${repo}/contents/.nojekyll`;
     var options = {
@@ -391,6 +395,7 @@ function createNoJekyllFile(token, owner, repo) {
     };
     
     UrlFetchApp.fetch(url, options);
+    console.log('.nojekyll file created successfully');
     
     // Also create _config.yml to ensure proper encoding
     createConfigFile(token, owner, repo);
@@ -403,6 +408,15 @@ function createNoJekyllFile(token, owner, repo) {
 
 function createConfigFile(token, owner, repo) {
   try {
+    // Check if _config.yml already exists
+    var sha = getCurrentFileSha(token, owner, repo, '_config.yml');
+    
+    // If file already exists, skip creating it
+    if (sha) {
+      console.log('_config.yml file already exists, skipping creation');
+      return;
+    }
+    
     var configContent = `# GitHub Pages configuration
 encoding: UTF-8
 highlighter: rouge
@@ -412,8 +426,6 @@ kramdown:
   hard_wrap: false
 `;
     
-    var sha = getCurrentFileSha(token, owner, repo, '_config.yml');
-    
     var payload = {
       "message": "Add _config.yml for UTF-8 encoding",
       "content": Utilities.base64Encode(Utilities.newBlob(configContent).getBytes()),
@@ -422,10 +434,6 @@ kramdown:
         "email": "noreply@mahjong-rankings.com"
       }
     };
-    
-    if (sha) {
-      payload.sha = sha;
-    }
     
     var url = `https://api.github.com/repos/${owner}/${repo}/contents/_config.yml`;
     var options = {
@@ -439,6 +447,7 @@ kramdown:
     };
     
     UrlFetchApp.fetch(url, options);
+    console.log('_config.yml file created successfully');
     
   } catch (error) {
     // Silently fail - not critical
