@@ -45,7 +45,7 @@ If you just use the sheet with its Apps Script it will work, but you can also go
 
 ![image](https://github.com/user-attachments/assets/c35d06a3-a110-49d1-a433-d49616c302df)
 
-![Example of HTML publishing](media/image.png)
+![Example of HTML publishing](media/html_export.png)
 
 ## Optional fancy scripts
 
