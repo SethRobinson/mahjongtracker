@@ -1,6 +1,6 @@
 # Mahjong Tracker
 
-A Google Sheets-based mahjong score tracking system for Japanese style Riichi Mahjong parlors or home tournaments.  Tested in Windows and WSL.
+A Google Sheets-based mahjong score tracking system for Japanese style Riichi Mahjong parlors or home tournaments.
 
 Do you have a group of friends or a mahjong parlor and need to track everybody's scores over the season?   If so, use this google sheet template + its App Script, it allows you to easily add games and track player stats.  Let's make Riichi Mahjong more popular in the west!
 
@@ -49,7 +49,7 @@ If you just use the sheet with its Apps Script it will work, but you can also go
 
 ## Optional fancy scripts
 
-To use the fancy scripts that do auto uploading and write HTML rankings to a git page automatically, see the [SETUP_GUIDE.md](SETUP_GUIDE.md) 
+To use the fancy python scripts that do auto uploading and write HTML rankings to a git page automatically, see the [SETUP_GUIDE.md](SETUP_GUIDE.md) 
 
 ## License
 
@@ -68,4 +68,4 @@ This software was partially developed with the assistance of AI tools. The codeb
 
 - Written by Seth A. Robinson
 - House rules documents written by Akiko Robinson and Wei Yi
-- Special thanks to C2 Kyoto for being forced to beta test this for the last few years
+- Special thanks to C2 Kyoto patrons for being forced to beta test this for the last few years
