@@ -4,7 +4,8 @@ A Google Sheets-based mahjong score tracking system for Japanese style Riichi Ma
 
 Do you have a group of friends or a mahjong parlor and need to track everybodies scores over the season?   If so, use this google sheet template + its App Script, it allows you to easily add games and track player stats.  Let's make Riichi Mahjong more popular in the west!
 
-![image](https://github.com/user-attachments/assets/ee3a72a3-d409-4479-b130-a5d762526fe6)
+![image](https://github.com/user-attachments/assets/b8c9b921-f552-4a4e-b23e-4c133c9be0b1)
+
 
 A template example of it can be [viewed and copied here](https://docs.google.com/spreadsheets/d/1FPFDz02pHcMTQVWbEV1s2KLiHF15_rTm2Qk-TRcw1tM).  However, this won't copy the Apps Script files, so I think you'll have to copy those from the apps_script_files dir here into it, manually (Extensions->Apps Scripts), or use the fancy harder to use scripts in this repo to copy them for you.
 
