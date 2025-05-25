@@ -1,15 +1,15 @@
 # Mahjong Tracker
 
-A Google Sheets-based mahjong score tracking system for Japanese style Riichi Mahjong parlors or home tournaments.publishing.  Tested in Windows and WSL.
+A Google Sheets-based mahjong score tracking system for Japanese style Riichi Mahjong parlors or home tournaments.  Tested in Windows and WSL.
 
-Do you have a group of friends or a mahjong parlor and need to track everybodies scores over the season?   If so, use this google sheet template + its App Script, it allows you to easily add games and track player stats.  Let's make Riichi Mahjong more popular in the west!
+Do you have a group of friends or a mahjong parlor and need to track everybody's scores over the season?   If so, use this google sheet template + its App Script, it allows you to easily add games and track player stats.  Let's make Riichi Mahjong more popular in the west!
 
 ![image](https://github.com/user-attachments/assets/b8c9b921-f552-4a4e-b23e-4c133c9be0b1)
 
 
 A template example of it can be [viewed and copied here](https://docs.google.com/spreadsheets/d/1FPFDz02pHcMTQVWbEV1s2KLiHF15_rTm2Qk-TRcw1tM).  However, this won't copy the Apps Script files, so I think you'll have to copy those from the apps_script_files dir here into it, manually (Extensions->Apps Scripts), or use the fancy harder to use scripts in this repo to copy them for you.
 
-Note:  The permissions are very scary on this due to the auto file syncing etc, you don't have to approve them all if you aren't using the auto file syncing stuff, etc.  You do need to approves access to read/write to the sheets file when it asks as a minimum though.
+Note:  The permissions are very scary on this due to the auto file syncing etc, you don't have to approve them all if you aren't using the auto file syncing stuff, etc.  You do need to approve access to read/write to the sheets file when it asks as a minimum though.
 
 If you install the scripts right, in the Sheets file you'll notice a new option: "C2 Options"
 
@@ -19,7 +19,7 @@ If you install the scripts right, in the Sheets file you'll notice a new option:
 
 The Riichi Mahjong scoring is similar to MLeague but with some modifications. (no two parlours work exactly the same, ours are tweaked to be slightly more beginner friendly and fun)
 
-The (70% done, under constructions) Official C2 Kyoto house rules: [English](media/ハウスルール（英語）.docx) [Japanese](media/ハウスルール.docx)
+The (70% done, under construction) Official C2 Kyoto house rules: [English](media/ハウスルール（英語）.docx) [Japanese](media/ハウスルール.docx)
 
 ![C2 Kyoto](media/c2kyoto.jpg)
 
@@ -68,4 +68,4 @@ This software was partially developed with the assistance of AI tools. The codeb
 
 - Written by Seth A. Robinson
 - House rules documents written by Akiko Robinson and Wei Yi
-- Special thanks to C2 Kyoto for being force to beta test this for the last few years
+- Special thanks to C2 Kyoto for being forced to beta test this for the last few years
