@@ -1,73 +1,54 @@
 # Mahjong Tracker
 
-A Google Sheets-based mahjong score tracking system with automated workflow for local development and web publishing.  Tested in Windows and WSL.
+A Google Sheets-based mahjong score tracking system for Japanese style Riichi Mahjong parlors or home tournaments.publishing.  Tested in Windows and WSL.
+
+Do you have a group of friends or a mahjong parlor and need to track everybodies scores over the season?   If so, use this google sheet template + its App Script, it allows you to easily add games and track player stats.  Let's make Riichi Mahjong more popular in the west!
 
 ![image](https://github.com/user-attachments/assets/ee3a72a3-d409-4479-b130-a5d762526fe6)
 
-Do you have a group of friends or a mahjong parlor and need to track everybodies scores over the season?   If so, use this google sheet template + its App Script, it allows you to easily add games and track player stats.
+A template example of it can be [viewed and copied here](https://docs.google.com/spreadsheets/d/1FPFDz02pHcMTQVWbEV1s2KLiHF15_rTm2Qk-TRcw1tM).  However, this won't copy the Apps Script files, so I think you'll have to copy those from the apps_script_files dir here into it, manually (Extensions->Apps Scripts), or use the fancy harder to use scripts in this repo to copy them for you.
 
-![image](https://github.com/user-attachments/assets/c35d06a3-a110-49d1-a433-d49616c302df)
+Note:  The permissions are very scary on this due to the auto file syncing etc, you don't have to approve them all if you aren't using the auto file syncing stuff, etc.  You do need to approves access to read/write to the sheets file when it asks as a minimum though.
 
-BTW, this has nothing to do with the [Mahjong AI robot](https://www.youtube.com/watch?v=TIz9l8qOs68) I did btw.
+If you install the scripts right, in the Sheets file you'll notice a new option: "C2 Options"
 
-Example of its automatic HTML publishing to a github page:
+![image](media/c2_options.png)
 
-![Example of HTML publishing](media/image.png)
+## Scoring rules and such
 
+The Riichi Mahjong scoring is similar to MLeague but with some modifications. (no two parlours work exactly the same, ours are tweaked to be slightly more beginner friendly and fun)
+
+The (70% done, under constructions) Official C2 Kyoto house rules: [English](media/ハウスルール（英語）.docx) [Japanese](media/ハウスルール.docx)
+
+![C2 Kyoto](media/c2kyoto.jpg)
+
+Come visit [C2 Kyoto](https://www.c2kyoto.com) someday and play with us!
 
 ## Features
 
 - **Score Tracking**: Track individual games and calculate player rankings automatically
 - **Team Management**: Support for team-based competitions with rankings
-- **Automated Sync**: Download and upload Google Apps Script files for local development
-- **HTML Export**: Automatically generate beautiful HTML rankings pages
-- **GitHub Pages Publishing**: One-click publishing to your GitHub Pages website
-- **Data Export**: Download spreadsheet data in CSV, JSON, and Excel formats
+- **Flags and images**: Can assign country flags for each player, and images for teams
+- **Nick names**: Can specify a "nick name" for players to use in the rankings, helps with privacy
+- **Easy editing**: Every player, game etc is just a row in a spreadsheet, so easy to make revisions or delete games
 
-## Workflow Benefits
+## Optional Workflow Benefits
 
-This project simplifies working with Google Apps Script by providing:
+If you just use the sheet with its Apps Script it will work, but you can also go next level for stuff like this:
 
-- **Local Development**: Edit Apps Script files locally with your preferred editor
-- **Version Control**: Keep your Apps Script code in Git
-- **Automated Deployment**: Upload changes back to Google with a single command
-- **Web Publishing**: Automatically generate and publish rankings to GitHub Pages
+- **GitHub Pages Publishing**: One-click publishing to your GitHub Pages website from the Apps Script
+- **Automated Sync**: Local python script to download and upload Google Apps Script files for faster development
+- **Data Export**: Local python script that can download spreadsheet data in CSV, JSON, and Excel formats
 
-## Quick Start
+## More screenshots
 
-1. **Setup OAuth credentials** (see SETUP_GUIDE.md for details)
-2. **Create config.json** with your project IDs:
-```json
-{
-  "apps_script_project_id": "your-apps-script-id",
-  "spreadsheet_id": "your-spreadsheet-id"
-}
-```
-3. **Install dependencies**: `pip install -r requirements.txt`
-4. **Download Apps Script files**: `python apps_script_sync.py download`
-5. **Make changes locally** and upload: `python apps_script_sync.py upload`
+![image](https://github.com/user-attachments/assets/c35d06a3-a110-49d1-a433-d49616c302df)
 
-## Key Commands
+![Example of HTML publishing](media/image.png)
 
-- `python apps_script_sync.py download` - Download Apps Script files from Google
-- `python apps_script_sync.py upload` - Upload local changes to Google
-- `python sheets_download.py` - Download spreadsheet data (CSV/JSON/Excel)
-- `python reset_auth.py` - Reset authentication if needed
+## Optional fancy scripts
 
-## Project Structure
-
-- `apps_script_files/` - Local copies of Google Apps Script files
-- `sheet_data/` - Downloaded spreadsheet data (not really needed, but can be useful)
-- `index.html` - Auto-generated rankings webpage
-- `config.json` - **Required**: Contains Apps Script and Spreadsheet IDs
-
-## Requirements
-
-- Python 3.6+
-- Google Cloud Project with Apps Script API enabled
-- `config.json` file with your project IDs
-
-See [SETUP_GUIDE.md](SETUP_GUIDE.md) for detailed setup instructions.
+To use the fancy scripts that do auto uploading and write HTML rankings to a git page automatically, see the [SETUP_GUIDE.md](SETUP_GUIDE.md) 
 
 ## License
 
@@ -77,5 +58,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 This software was partially developed with the assistance of AI tools. The codebase includes contributions from AI-assisted development while maintaining human oversight and testing.
 
+## Notes and misc
 
+- This has nothing to do with Seth's [Mahjong AI robot](https://www.youtube.com/watch?v=TIz9l8qOs68), that's a different project.
+- I just realized I hardcoded it so flag images are read from rtsoft, but meh, that's fine I guess, I have the bandwidth
 
+## Credits
+
+- Written by Seth A. Robinson
+- House rules documents written by Akiko Robinson and Wei Yi
+- Special thanks to C2 Kyoto for being force to beta test this for the last few years
