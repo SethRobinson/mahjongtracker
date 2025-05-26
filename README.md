@@ -32,6 +32,8 @@ Come visit [C2 Kyoto](https://www.c2kyoto.com) someday and play with us!
 - **Flags and images**: Can assign country flags for each player, and images for teams
 - **Nick names**: Can specify a "nick name" for players to use in the rankings, helps with privacy
 - **Easy editing**: Every player, game etc is just a row in a spreadsheet, so easy to make revisions or delete games
+- **Adding game results is easy**: Names are chosen with a dropdown that is limited to players marked "Here today?" in the players tab, helps reduce entry mistakes.  Auto-detects if it's a 3 or 4 player game and separates them in rankings.  (It's easy enough that our patrons enter their own games!)
+- **Debug Tab**: This let's you examine/verify the math used to compute the rankings
 
 ## Optional Workflow Benefits
 
