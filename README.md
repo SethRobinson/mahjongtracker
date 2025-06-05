@@ -6,6 +6,7 @@ Do you have a group of friends or a mahjong parlor and need to track everybody's
 
 ![image](https://github.com/user-attachments/assets/b8c9b921-f552-4a4e-b23e-4c133c9be0b1)
 
+TIP:  You might also want to use [RTEventTimer](https://github.com/SethRobinson/RTEventTimer), a custom mahjong event timer for tournaments.
 
 A template example of it can be [viewed and copied here](https://docs.google.com/spreadsheets/d/1FPFDz02pHcMTQVWbEV1s2KLiHF15_rTm2Qk-TRcw1tM).  However, this won't copy the Apps Script files, so I think you'll have to copy those from the apps_script_files dir here into it, manually (Extensions->Apps Scripts), or use the fancy harder to use scripts in this repo to copy them for you.
 
