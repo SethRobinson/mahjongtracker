@@ -163,9 +163,8 @@ function generateRankingsHtml() {
     .rank-2 { color: #696969; font-weight: bold; font-size: 1.1em; }
     .rank-3 { color: #8B4513; font-weight: bold; font-size: 1.1em; }
     .team-logo {
-      width: 30px;
-      height: 30px;
-      margin-right: 10px;
+      width: 21px;
+      height: 21px;
       vertical-align: middle;
     }
     .team-members {
@@ -311,6 +310,7 @@ function generateRankingTableHtml(id, title, sheet) {
 function generateTeamRankingTableHtml(sheet) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var data = sheet.getDataRange().getValues();
+  var formulas = sheet.getDataRange().getFormulas();
   
   // Get team logos from the Teams sheet
   var teamsSheet = ss.getSheetByName("Teams");
@@ -334,7 +334,8 @@ function generateTeamRankingTableHtml(sheet) {
       <thead>
         <tr>
           <th>Rank</th>
-          <th>Team</th>
+          <th>Logo</th>
+          <th>Name</th>
           <th>Members</th>
           <th>Total Score</th>
         </tr>
@@ -346,14 +347,20 @@ function generateTeamRankingTableHtml(sheet) {
     if (!data[row][0]) continue; // Skip empty rows
     
     var rank = data[row][0];
-    var teamName = data[row][1];
-    var teamScore = data[row][3];
-    var members = data[row+1] && data[row+1][2] ? data[row+1][2] : '';
+    var teamName = data[row][2]; // Name is now in column 3 (index 2)
+    var teamScore = data[row][4]; // Score is now in column 5 (index 4)
+    var members = data[row][3];   // Members is now in column 4 (index 3)
     
-    // Get logo URL from Teams sheet
-    var logoHtml = '';
-    if (teamLogos[teamName]) {
-      logoHtml = `<img src="${teamLogos[teamName]}" class="team-logo" alt="" style="width:30px; height:30px; margin-right:10px; vertical-align:middle; border-radius:4px;">`;
+    // Get logo URL from formulas or Teams sheet
+    var logoUrl = '';
+    var logoFormula = formulas[row] && formulas[row][1] ? formulas[row][1] : ''; // Logo column formula
+    if (logoFormula && logoFormula.includes('IMAGE(')) {
+      var urlMatch = logoFormula.match(/IMAGE\("([^"]+)"/);
+      if (urlMatch) {
+        logoUrl = urlMatch[1];
+      }
+    } else if (teamLogos[teamName]) {
+      logoUrl = teamLogos[teamName];
     }
     
     var rankClass = rank <= 3 ? ` class="rank-${rank}"` : '';
@@ -361,10 +368,17 @@ function generateTeamRankingTableHtml(sheet) {
     // Format team score to 1 decimal place
     var formattedScore = typeof teamScore === 'number' ? teamScore.toFixed(1) : teamScore;
     
+    // Create logo HTML
+    var logoHtml = '';
+    if (logoUrl) {
+      logoHtml = `<img src="${logoUrl}" class="team-logo" alt="">`;
+    }
+    
     html.push(`
       <tr>
         <td${rankClass}>${rank}</td>
-        <td class="team-name">${logoHtml}${teamName}</td>
+        <td>${logoHtml}</td>
+        <td class="team-name">${teamName}</td>
         <td class="team-members">${members}</td>
         <td>${formattedScore}</td>
       </tr>
@@ -482,17 +496,21 @@ function debugTeamFormulas() {
     if (!data[row][0]) continue;
     
     var rank = data[row][0];
-    var teamName = data[row][1];
-    var teamFormula = formulas[row] && formulas[row][1] ? formulas[row][1] : '';
+    var logoFormula = formulas[row] && formulas[row][1] ? formulas[row][1] : ''; // Logo is in column 2
+    var teamName = data[row][2]; // Team name is now in column 3
+    var members = data[row][3];   // Members is in column 4
+    var score = data[row][4];     // Score is in column 5
     
     debugInfo.push("");
     debugInfo.push("Row " + (row + 1) + ":");
     debugInfo.push("  Rank: " + rank);
-    debugInfo.push("  Team Name (display): " + teamName);
-    debugInfo.push("  Team Formula: " + teamFormula);
+    debugInfo.push("  Team Name: " + teamName);
+    debugInfo.push("  Members: " + members);
+    debugInfo.push("  Score: " + score);
+    debugInfo.push("  Logo Formula: " + logoFormula);
     
-    if (teamFormula && teamFormula.includes('IMAGE(')) {
-      var logoMatch = teamFormula.match(/IMAGE\("([^"]+)"/);
+    if (logoFormula && logoFormula.includes('IMAGE(')) {
+      var logoMatch = logoFormula.match(/IMAGE\("([^"]+)"/);
       if (logoMatch) {
         debugInfo.push("  Found Logo URL: " + logoMatch[1]);
       }

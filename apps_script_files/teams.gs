@@ -154,13 +154,13 @@ function generateTeamRankingsSheet(ss, teams) {
     return b.totalScore - a.totalScore;
   });
   
-  // Add title row
+  // Add title row - now spanning 5 columns instead of 4
   sheet.getRange(1, 1).setValue("Team Rankings (4 Player)");
-  sheet.getRange(1, 1, 1, 4).merge();
+  sheet.getRange(1, 1, 1, 5).merge();
   sheet.getRange(1, 1).setFontSize(18).setFontWeight('bold').setFontColor('#1f4e79').setBackground('#cfe2f3').setHorizontalAlignment('center').setVerticalAlignment('middle').setBorder(true, true, true, true, true, true);
   
-  // Add headers
-  var headers = ["Rank", "Team", "Members", "Team Score"];
+  // Add headers - now with Logo and Name as separate columns
+  var headers = ["Rank", "Logo", "Name", "Members", "Team Score"];
   sheet.getRange(2, 1, 1, headers.length).setValues([headers]);
   sheet.getRange(2, 1, 1, headers.length).setFontSize(12).setFontWeight('bold').setFontColor('white').setBackground('#4f81bd').setHorizontalAlignment('center').setVerticalAlignment('middle').setBorder(true, true, true, true, true, true);
   
@@ -175,7 +175,7 @@ function generateTeamRankingsSheet(ss, teams) {
     return;
   }
   
-  // Add team data - each team uses 2 actual rows (for name and logo)
+  // Add team data - each team uses 2 actual rows (for proper vertical spacing)
   var currentRow = 3;
   for (var i = 0; i < teamArray.length; i++) {
     var rank = i + 1;
@@ -186,43 +186,47 @@ function generateTeamRankingsSheet(ss, teams) {
     sheet.getRange(currentRow, 1).setValue(rank);
     sheet.getRange(currentRow, 1).setFontSize(33); // 3x larger font (11 * 3)
     
-    // Team name in first row
-    sheet.getRange(currentRow, 2).setValue(team.name);
-    sheet.getRange(currentRow, 2).setFontSize(20);
-    sheet.getRange(currentRow, 2).setFontWeight('bold');
-    
-    // Logo in second row
+    // Logo in merged cells (2 rows) - now in column 2
+    sheet.getRange(currentRow, 2, 2, 1).merge();
     if (team.logoUrl && team.logoUrl !== "") {
-      var logoFormula = '=IMAGE("' + team.logoUrl + '", 1)';
-      sheet.getRange(currentRow + 1, 2).setFormula(logoFormula);
+      // Use IMAGE formula with mode 4 to specify exact size - 70% of current 220px height = 154px
+      var logoFormula = '=IMAGE("' + team.logoUrl + '", 4, 154, 154)';
+      sheet.getRange(currentRow, 2).setFormula(logoFormula);
     }
     
-    // Merge cells for members (2 rows)
+    // Team name in merged cells (2 rows) - now in column 3
     sheet.getRange(currentRow, 3, 2, 1).merge();
+    sheet.getRange(currentRow, 3).setValue(team.name);
+    sheet.getRange(currentRow, 3).setFontSize(20);
+    sheet.getRange(currentRow, 3).setFontWeight('bold');
+    sheet.getRange(currentRow, 3).setVerticalAlignment('middle');
+    
+    // Merge cells for members (2 rows) - now in column 4
+    sheet.getRange(currentRow, 4, 2, 1).merge();
     if (team.members.length > 0) {
       var membersText = team.members.join('\n');
-      sheet.getRange(currentRow, 3).setValue(membersText);
-      sheet.getRange(currentRow, 3).setWrapStrategy(SpreadsheetApp.WrapStrategy.WRAP);
-      sheet.getRange(currentRow, 3).setVerticalAlignment('middle');
+      sheet.getRange(currentRow, 4).setValue(membersText);
+      sheet.getRange(currentRow, 4).setWrapStrategy(SpreadsheetApp.WrapStrategy.WRAP);
+      sheet.getRange(currentRow, 4).setVerticalAlignment('middle');
     }
     
-    // Merge cells for score (2 rows)
-    sheet.getRange(currentRow, 4, 2, 1).merge();
-    sheet.getRange(currentRow, 4).setValue(team.totalScore);
-    sheet.getRange(currentRow, 4).setNumberFormat("0.0");
-    sheet.getRange(currentRow, 4).setFontSize(33); // 3x larger font (11 * 3)
+    // Merge cells for score (2 rows) - now in column 5
+    sheet.getRange(currentRow, 5, 2, 1).merge();
+    sheet.getRange(currentRow, 5).setValue(team.totalScore);
+    sheet.getRange(currentRow, 5).setNumberFormat("0.0");
+    sheet.getRange(currentRow, 5).setFontSize(33); // 3x larger font (11 * 3)
     
     // Apply blue background to both rows
-    sheet.getRange(currentRow, 1, 2, 4).setBackground('#dbe5f1');
+    sheet.getRange(currentRow, 1, 2, 5).setBackground('#dbe5f1');
     // Don't override the individual font sizes we just set
-    sheet.getRange(currentRow, 3, 2, 1).setFontSize(22); // 2x larger font for player names (11 * 2)
-    sheet.getRange(currentRow, 1, 2, 4).setHorizontalAlignment('center');
-    sheet.getRange(currentRow, 1, 2, 4).setVerticalAlignment('middle');
-    sheet.getRange(currentRow, 1, 2, 4).setBorder(true, true, true, true, true, true);
+    sheet.getRange(currentRow, 4, 2, 1).setFontSize(22); // 2x larger font for player names (11 * 2)
+    sheet.getRange(currentRow, 1, 2, 5).setHorizontalAlignment('center');
+    sheet.getRange(currentRow, 1, 2, 5).setVerticalAlignment('middle');
+    sheet.getRange(currentRow, 1, 2, 5).setBorder(true, true, true, true, true, true);
     
-    // Set row heights
-    sheet.setRowHeight(currentRow, 30);     // Team name row
-    sheet.setRowHeight(currentRow + 1, 220); // Logo row
+    // Set row heights - slightly reduced to account for smaller logo
+    sheet.setRowHeight(currentRow, 30);     // First row
+    sheet.setRowHeight(currentRow + 1, 154); // Second row - matches logo height
     
     // Move to next team (skip 2 rows)
     currentRow += 2;
@@ -230,7 +234,8 @@ function generateTeamRankingsSheet(ss, teams) {
   
   // Set column widths
   sheet.setColumnWidth(1, 80);   // Rank
-  sheet.setColumnWidth(2, 250);  // Team
-  sheet.setColumnWidth(3, 300);  // Members  
-  sheet.setColumnWidth(4, 150);  // Team Score
+  sheet.setColumnWidth(2, 170);  // Logo
+  sheet.setColumnWidth(3, 260);  // Name - increased by 30% from 200
+  sheet.setColumnWidth(4, 300);  // Members  
+  sheet.setColumnWidth(5, 150);  // Team Score
 }
