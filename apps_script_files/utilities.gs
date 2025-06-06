@@ -56,3 +56,9 @@ function formatScore(score) {
   */
   return formattedScore;
 }
+
+// Toast message helper function
+function showToastMessage(message, title) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  ss.toast(message, title || 'Notification', 3);
+}

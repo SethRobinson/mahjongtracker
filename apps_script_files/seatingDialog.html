@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base target="_top">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 20px;
+      font-size: 14px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 350px;
+      margin: auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .description {
+      color: #666;
+      font-size: 12px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .generate-btn {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .generate-btn:hover {
+      background-color: #45a049;
+    }
+    .generate-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .cancel-btn {
+      background-color: #f44336;
+      color: white;
+    }
+    .cancel-btn:hover {
+      background-color: #d32f2f;
+    }
+    .info {
+      background-color: #e3f2fd;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+      font-size: 12px;
+      color: #1976d2;
+    }
+    .error {
+      color: #f44336;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+    .loading {
+      text-align: center;
+      color: #666;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Create Table Seating Plan</h2>
+    <p class="description">Generate a seating plan that ensures players from the same team never sit together and minimizes repeat pairings.</p>
+    
+    <div class="info" id="teamInfo">
+      Loading team information...
+    </div>
+    
+    <form id="seatingForm">
+      <div class="form-group">
+        <label for="numTables">Number of Tables:</label>
+        <input type="number" id="numTables" name="numTables" min="1" max="20" value="5" required>
+        <div class="error" id="tablesError"></div>
+      </div>
+      
+      <div class="form-group">
+        <label for="numRounds">Number of Rounds:</label>
+        <input type="number" id="numRounds" name="numRounds" min="1" max="50" value="5" required>
+        <div class="error" id="roundsError"></div>
+      </div>
+      
+      <div class="button-group">
+        <button type="button" class="cancel-btn" onclick="cancel()">Cancel</button>
+        <button type="button" class="generate-btn" id="generateBtn" onclick="generate()">Generate</button>
+      </div>
+    </form>
+    
+    <div class="loading" id="loading">
+      <p>Generating seating plan...</p>
+      <p>This may take a moment for complex arrangements.</p>
+    </div>
+  </div>
+  
+  <script>
+    let teamData = null;
+    
+    // Load team information on startup
+    window.onload = function() {
+      google.script.run
+        .withSuccessHandler(displayTeamInfo)
+        .withFailureHandler(handleError)
+        .getTeamsWithPlayers();
+    };
+    
+    function displayTeamInfo(data) {
+      teamData = data;
+      let totalPlayers = 0;
+      let teamCount = 0;
+      
+      for (let teamId in data) {
+        if (data[teamId].players.length > 0) {
+          totalPlayers += data[teamId].players.length;
+          teamCount++;
+        }
+      }
+      
+      const maxTables = Math.floor(totalPlayers / 4);
+      document.getElementById('numTables').max = maxTables;
+      
+      document.getElementById('teamInfo').innerHTML = 
+        `<strong>Tournament Info:</strong><br>` +
+        `${teamCount} teams with ${totalPlayers} total players<br>` +
+        `Maximum ${maxTables} tables (4 players each)`;
+        
+      validateInputs();
+    }
+    
+    function validateInputs() {
+      const numTables = parseInt(document.getElementById('numTables').value);
+      const numRounds = parseInt(document.getElementById('numRounds').value);
+      const generateBtn = document.getElementById('generateBtn');
+      
+      let isValid = true;
+      
+      // Clear errors
+      document.getElementById('tablesError').textContent = '';
+      document.getElementById('roundsError').textContent = '';
+      
+      if (teamData) {
+        let totalPlayers = 0;
+        for (let teamId in teamData) {
+          totalPlayers += teamData[teamId].players.length;
+        }
+        
+        const maxTables = Math.floor(totalPlayers / 4);
+        const requiredPlayers = numTables * 4;
+        
+        if (numTables > maxTables) {
+          document.getElementById('tablesError').textContent = 
+            `Too many tables. Maximum is ${maxTables} with ${totalPlayers} players.`;
+          isValid = false;
+        } else if (requiredPlayers > totalPlayers) {
+          document.getElementById('tablesError').textContent = 
+            `Need ${requiredPlayers} players for ${numTables} tables, but only have ${totalPlayers}.`;
+          isValid = false;
+        }
+      }
+      
+      if (numRounds < 1) {
+        document.getElementById('roundsError').textContent = 'Must have at least 1 round.';
+        isValid = false;
+      }
+      
+      generateBtn.disabled = !isValid;
+      return isValid;
+    }
+    
+    // Add event listeners for validation
+    document.getElementById('numTables').addEventListener('input', validateInputs);
+    document.getElementById('numRounds').addEventListener('input', validateInputs);
+    
+    function generate() {
+      if (!validateInputs()) {
+        return;
+      }
+      
+      const numTables = parseInt(document.getElementById('numTables').value);
+      const numRounds = parseInt(document.getElementById('numRounds').value);
+      
+      // Show loading message
+      document.getElementById('seatingForm').style.display = 'none';
+      document.getElementById('loading').style.display = 'block';
+      
+      google.script.run
+        .withSuccessHandler(handleSuccess)
+        .withFailureHandler(handleGenerateError)
+        .generateSeatingPlan(numTables, numRounds);
+    }
+    
+    function handleSuccess(result) {
+      if (result.success) {
+        google.script.host.close();
+        // Show success message
+        google.script.run.showToastMessage('Seating plan created successfully!', 'Complete');
+      } else {
+        handleGenerateError(new Error(result.error));
+      }
+    }
+    
+    function handleError(error) {
+      document.getElementById('teamInfo').innerHTML = 
+        '<span style="color: #f44336;">Error loading team data: ' + error.message + '</span>';
+      document.getElementById('generateBtn').disabled = true;
+    }
+    
+    function handleGenerateError(error) {
+      // Hide loading, show form again
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('seatingForm').style.display = 'block';
+      
+      alert('Error generating seating plan: ' + error.message);
+    }
+    
+    function cancel() {
+      google.script.host.close();
+    }
+  </script>
+</body>
+</html> 

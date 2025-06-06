@@ -8,6 +8,7 @@ function onOpen() {
     .addItem('Initialize Teams Sheet', 'initializeTeamsSheet')
     .addItem('Export Rankings to HTML', 'exportRankingsToHtml')
     .addItem('Preview Rankings in Browser', 'previewRankingsInBrowser')
+    .addItem('Create Table Seating Plan', 'showSeatingPlanDialog')
     .addSeparator()
     .addItem('Visit the HTML export page', 'visitHtmlExportPage')
     .addSeparator()
