@@ -88,7 +88,8 @@ function getTeamsWithPlayers() {
   return teams;
 }
 
-function generateRounds(teamsData, numTables, numRounds) {
+// Generate ONE possible schedule (sequential heuristic)
+function generateRoundsOnce(teamsData, numTables, numRounds) {
   var rounds = [];
   var pairingHistory = {}; // Track who has sat with whom
   var allPlayers = [];
@@ -144,6 +145,35 @@ function generateRounds(teamsData, numTables, numRounds) {
     });
   }
   return rounds;
+}
+
+// Attempt to build many schedules and pick the one with the fewest duplicate pairings
+function generateRounds(teamsData, numTables, numRounds) {
+  var bestRounds = [];
+  var minDuplicates = Infinity;
+  var maxAttempts = 500; // Try up to 500 full-schedule attempts
+
+  for (var attempt = 0; attempt < maxAttempts; attempt++) {
+    var candidateRounds = generateRoundsOnce(teamsData, numTables, numRounds);
+
+    // Count total duplicates across all rounds
+    var dupCount = 0;
+    for (var r = 0; r < candidateRounds.length; r++) {
+      dupCount += candidateRounds[r].duplicatePairings.length;
+    }
+
+    if (dupCount < minDuplicates) {
+      minDuplicates = dupCount;
+      bestRounds = candidateRounds;
+    }
+
+    // Early exit if perfect schedule (0 duplicates) found
+    if (minDuplicates === 0) {
+      break;
+    }
+  }
+
+  return bestRounds;
 }
 
 // Helper to detect duplicate pairings against existing history
