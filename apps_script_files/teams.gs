@@ -72,12 +72,13 @@ function updateTeamRankings() {
         logoUrl: logoUrl,
         members: [],
         memberDetails: [], // Store both name and country code
-        totalScore: 0
+        totalScore: 0,
+        gamesPlayed: 0
       };
     }
   }
   
-  // Get current 4 player rankings to extract scores
+  // Get current 4 player rankings to extract scores and games played
   var fourPlayerRankings = ss.getSheetByName("4 Player Season Rankings");
   if (!fourPlayerRankings) {
     SpreadsheetApp.getUi().alert('Please calculate rankings first!');
@@ -86,13 +87,16 @@ function updateTeamRankings() {
   
   var rankingsData = fourPlayerRankings.getDataRange().getValues();
   var playerScores = {};
+  var playerGames = {};
   
-  // Extract player scores from rankings (skip title and header rows)
+  // Extract player scores and games played from rankings (skip title and header rows)
   for (var i = 2; i < rankingsData.length; i++) {
     var playerName = rankingsData[i][2]; // Player column
     var score = parseFloat(rankingsData[i][3]) || 0; // Score column
+    var games = parseInt(rankingsData[i][4]) || 0; // Games column
     if (playerName && playerName !== "") {
       playerScores[playerName] = score;
+      playerGames[playerName] = games;
     }
   }
   
@@ -116,6 +120,7 @@ function updateTeamRankings() {
         countryCode: countryCode || 'c2'
       });
       teams[teamId].totalScore += playerScores[playerName] || 0;
+      teams[teamId].gamesPlayed += playerGames[playerName] || 0;
     }
   }
   
@@ -144,7 +149,8 @@ function generateTeamRankingsSheet(ss, teams) {
         logoUrl: teams[teamId].logoUrl,
         members: teams[teamId].members,
         memberDetails: teams[teamId].memberDetails,
-        totalScore: teams[teamId].totalScore
+        totalScore: teams[teamId].totalScore,
+        gamesPlayed: teams[teamId].gamesPlayed
       });
     }
   }
@@ -154,13 +160,13 @@ function generateTeamRankingsSheet(ss, teams) {
     return b.totalScore - a.totalScore;
   });
   
-  // Add title row - now spanning 5 columns instead of 4
+  // Add title row - now spanning 6 columns instead of 5
   sheet.getRange(1, 1).setValue("Team Rankings (4 Player)");
-  sheet.getRange(1, 1, 1, 5).merge();
+  sheet.getRange(1, 1, 1, 6).merge();
   sheet.getRange(1, 1).setFontSize(18).setFontWeight('bold').setFontColor('#1f4e79').setBackground('#cfe2f3').setHorizontalAlignment('center').setVerticalAlignment('middle').setBorder(true, true, true, true, true, true);
   
-  // Add headers - now with Logo and Name as separate columns
-  var headers = ["Rank", "Logo", "Name", "Members", "Team Score"];
+  // Add headers - now with Games Played
+  var headers = ["Rank", "Logo", "Name", "Members", "Games Played", "Team Score"];
   sheet.getRange(2, 1, 1, headers.length).setValues([headers]);
   sheet.getRange(2, 1, 1, headers.length).setFontSize(12).setFontWeight('bold').setFontColor('white').setBackground('#4f81bd').setHorizontalAlignment('center').setVerticalAlignment('middle').setBorder(true, true, true, true, true, true);
   
@@ -210,19 +216,25 @@ function generateTeamRankingsSheet(ss, teams) {
       sheet.getRange(currentRow, 4).setVerticalAlignment('middle');
     }
     
-    // Merge cells for score (2 rows) - now in column 5
+    // Merge cells for games played (2 rows) - now in column 5
     sheet.getRange(currentRow, 5, 2, 1).merge();
-    sheet.getRange(currentRow, 5).setValue(team.totalScore);
-    sheet.getRange(currentRow, 5).setNumberFormat("0.0");
-    sheet.getRange(currentRow, 5).setFontSize(33); // 3x larger font (11 * 3)
+    sheet.getRange(currentRow, 5).setValue(team.gamesPlayed);
+    sheet.getRange(currentRow, 5).setFontSize(22);
+    sheet.getRange(currentRow, 5).setNumberFormat("0"); // Show as integer
+    
+    // Merge cells for score (2 rows) - now in column 6
+    sheet.getRange(currentRow, 6, 2, 1).merge();
+    sheet.getRange(currentRow, 6).setValue(team.totalScore);
+    sheet.getRange(currentRow, 6).setNumberFormat("0.0");
+    sheet.getRange(currentRow, 6).setFontSize(33); // 3x larger font (11 * 3)
     
     // Apply blue background to both rows
-    sheet.getRange(currentRow, 1, 2, 5).setBackground('#dbe5f1');
+    sheet.getRange(currentRow, 1, 2, 6).setBackground('#dbe5f1');
     // Don't override the individual font sizes we just set
     sheet.getRange(currentRow, 4, 2, 1).setFontSize(22); // 2x larger font for player names (11 * 2)
-    sheet.getRange(currentRow, 1, 2, 5).setHorizontalAlignment('center');
-    sheet.getRange(currentRow, 1, 2, 5).setVerticalAlignment('middle');
-    sheet.getRange(currentRow, 1, 2, 5).setBorder(true, true, true, true, true, true);
+    sheet.getRange(currentRow, 1, 2, 6).setHorizontalAlignment('center');
+    sheet.getRange(currentRow, 1, 2, 6).setVerticalAlignment('middle');
+    sheet.getRange(currentRow, 1, 2, 6).setBorder(true, true, true, true, true, true);
     
     // Set row heights - slightly reduced to account for smaller logo
     sheet.setRowHeight(currentRow, 30);     // First row
@@ -237,5 +249,6 @@ function generateTeamRankingsSheet(ss, teams) {
   sheet.setColumnWidth(2, 170);  // Logo
   sheet.setColumnWidth(3, 260);  // Name - increased by 30% from 200
   sheet.setColumnWidth(4, 300);  // Members  
-  sheet.setColumnWidth(5, 150);  // Team Score
+  sheet.setColumnWidth(5, 120);  // Games Played
+  sheet.setColumnWidth(6, 150);  // Team Score
 }

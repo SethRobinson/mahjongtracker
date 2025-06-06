@@ -6,7 +6,6 @@ function onOpen() {
     .addItem('Create debug info', 'createDebugInfo')
     .addItem('Calculate Rankings Manually', 'calculateRankings')
     .addItem('Initialize Teams Sheet', 'initializeTeamsSheet')
-    .addItem('Update Team Rankings', 'updateTeamRankings')
     .addItem('Export Rankings to HTML', 'exportRankingsToHtml')
     .addItem('Preview Rankings in Browser', 'previewRankingsInBrowser')
     .addSeparator()
@@ -15,5 +14,6 @@ function onOpen() {
     .addItem('Authorize External Access', 'authorizeScript')
     .addItem('Publish to Website (GitHub)', 'publishToGitHub')
     .addItem('Setup GitHub Publishing', 'showGitHubSetup')
+    .addItem('Disable GitHub Publishing', 'disableGitHubPublishing')
     .addToUi();
 }

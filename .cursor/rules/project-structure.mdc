@@ -1,0 +1,16 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Project Structure Guide
+
+This project is organized as follows:
+
+- The main workspace contains utility scripts, configuration files, and documentation.
+- The [apps_script_files](mdc:apps_script_files) directory contains Google Apps Script source files and related HTML for the main application logic.
+- The [media](mdc:media) directory contains images and documents used for reference or in the app.
+- The [.github/workflows](mdc:.github/workflows) directory contains GitHub Actions workflow files for CI/CD or automation.
+- The root contains important files such as [README.md](mdc:README.md), [requirements.txt](mdc:requirements.txt), and [index.html](mdc:index.html).
+
+Scripts like [apps_script_sync.py](mdc:apps_script_sync.py) and [sheets_download.py](mdc:sheets_download.py) are used for syncing and downloading data, respectively.

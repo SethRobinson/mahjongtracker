@@ -55,6 +55,9 @@ function addGameAndUpdateRankings(data) {
     // Add the game
     addGame(data);
     
+    // Recalculate rankings automatically
+    calculateRankings();
+    
     // Return success immediately to close dialog
     return { success: true };
   } catch (error) {

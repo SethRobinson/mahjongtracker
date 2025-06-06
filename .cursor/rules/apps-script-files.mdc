@@ -1,0 +1,15 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Apps Script Files Directory
+
+The [apps_script_files](mdc:apps_script_files) directory contains the source code for the Google Apps Script project, including:
+
+- `.gs` files for server-side logic (e.g., [teams.gs](mdc:apps_script_files/teams.gs), [github.gs](mdc:apps_script_files/github.gs), [rankings.gs](mdc:apps_script_files/rankings.gs))
+- HTML files for UI components (e.g., [index.html](mdc:apps_script_files/index.html), [ranking.html](mdc:apps_script_files/ranking.html))
+- [appsscript.json](mdc:apps_script_files/appsscript.json) for project configuration
+- [project_metadata.json](mdc:apps_script_files/project_metadata.json) for metadata
+
+This directory is the main source for the Google Apps Script application logic and UI.

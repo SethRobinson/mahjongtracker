@@ -1,0 +1,13 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Media Directory
+
+The [media](mdc:media) directory contains images and documents used for reference or as assets in the application. Examples include:
+
+- Images such as [c2_options.png](mdc:media/c2_options.png), [c2kyoto.jpg](mdc:media/c2kyoto.jpg), and [html_export.png](mdc:media/html_export.png)
+- Documents such as [ハウスルール.docx](mdc:media/ハウスルール.docx) and [ハウスルール（英語）.docx](mdc:media/ハウスルール（英語）.docx)
+
+These files are used for documentation, UI, or reference purposes.

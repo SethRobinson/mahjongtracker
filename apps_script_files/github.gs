@@ -594,3 +594,21 @@ function createGitHubSetupGuide() {
     SpreadsheetApp.getUi().ButtonSet.OK
   );
 }
+
+// Disable GitHub Publishing: removes all GitHub config properties
+function disableGitHubPublishing() {
+  var ui = SpreadsheetApp.getUi();
+  var result = ui.alert(
+    'Disable GitHub Publishing',
+    'Are you sure you want to disable GitHub publishing? This will remove all GitHub configuration and cannot be undone.',
+    ui.ButtonSet.OK_CANCEL
+  );
+  if (result !== ui.Button.OK) {
+    return;
+  }
+  var properties = PropertiesService.getScriptProperties();
+  properties.deleteProperty('GITHUB_OWNER');
+  properties.deleteProperty('GITHUB_REPO');
+  properties.deleteProperty('GITHUB_TOKEN');
+  ui.alert('GitHub publishing has been disabled. All configuration has been removed.', ui.ButtonSet.OK);
+}

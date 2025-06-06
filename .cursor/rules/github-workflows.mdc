@@ -1,0 +1,12 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# GitHub Workflows Directory
+
+The [.github/workflows](mdc:.github/workflows) directory contains GitHub Actions workflow files for automating tasks such as CI/CD. For example:
+
+- [pages-noop.yml](mdc:.github/workflows/pages-noop.yml): A workflow configuration file, possibly for GitHub Pages or a placeholder action.
+
+These files define automated processes that run on GitHub infrastructure.

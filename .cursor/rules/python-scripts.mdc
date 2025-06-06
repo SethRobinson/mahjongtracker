@@ -1,0 +1,16 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Python Scripts in Root Directory
+
+The root directory contains several Python scripts for utility and integration tasks:
+
+- [apps_script_sync.py](mdc:apps_script_sync.py): Used to synchronize Google Apps Script files between the local directory and Google Drive.  Use with parm "upload" to update the remote system.  Don't use parm "download" unless explicitly told, generally not what we want.
+- [sheets_download.py](mdc:sheets_download.py): Downloads data from Google Sheets.
+- [google_auth_helper.py](mdc:google_auth_helper.py): Handles Google authentication logic for API access. Do not use!
+- [reset_auth.py](mdc:reset_auth.py): Resets authentication tokens for Google API access.  Do not use!
+
+These scripts support the workflow for managing and interacting with Google Apps Script and Google Sheets.
+

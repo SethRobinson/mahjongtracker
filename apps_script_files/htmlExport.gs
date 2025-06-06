@@ -337,6 +337,7 @@ function generateTeamRankingTableHtml(sheet) {
           <th>Logo</th>
           <th>Name</th>
           <th>Members</th>
+          <th>Games Played</th>
           <th>Total Score</th>
         </tr>
       </thead>
@@ -348,8 +349,9 @@ function generateTeamRankingTableHtml(sheet) {
     
     var rank = data[row][0];
     var teamName = data[row][2]; // Name is now in column 3 (index 2)
-    var teamScore = data[row][4]; // Score is now in column 5 (index 4)
     var members = data[row][3];   // Members is now in column 4 (index 3)
+    var gamesPlayed = data[row][4]; // Games Played is now in column 5 (index 4)
+    var teamScore = data[row][5]; // Score is now in column 6 (index 5)
     
     // Get logo URL from formulas or Teams sheet
     var logoUrl = '';
@@ -380,6 +382,7 @@ function generateTeamRankingTableHtml(sheet) {
         <td>${logoHtml}</td>
         <td class="team-name">${teamName}</td>
         <td class="team-members">${members}</td>
+        <td>${gamesPlayed}</td>
         <td>${formattedScore}</td>
       </tr>
     `);

@@ -6,9 +6,6 @@ function calculateRankings() {
   
   // Update team rankings after individual rankings are calculated
   updateTeamRankings();
-  
-  // Automatically publish to GitHub if configured
-  autoPublishToGitHub();
 }
 
 function calculateSeasonRankings() {
