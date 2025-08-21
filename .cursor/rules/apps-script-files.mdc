@@ -13,3 +13,9 @@ The [apps_script_files](mdc:apps_script_files) directory contains the source cod
 - [project_metadata.json](mdc:apps_script_files/project_metadata.json) for metadata
 
 This directory is the main source for the Google Apps Script application logic and UI.
+
+## Sync reminder
+
+- After editing any files under `apps_script_files/`, run `python apps_script_sync.py upload`.
+- On Windows/PowerShell, run the command without piping.
+- If you change `apps_script_files/index.html` or any `.gs` files, upload before testing in Sheets.

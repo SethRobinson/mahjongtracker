@@ -1,5 +1,9 @@
 // Teams functionality
 function initializeTeamsSheet() {
+  if (typeof isTeamModeEnabled === 'function' && !isTeamModeEnabled()) {
+    SpreadsheetApp.getUi().alert('Team Mode is disabled. Enable it in Settings first.');
+    return;
+  }
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var teamsSheet = ss.getSheetByName("Teams");
   

@@ -4,8 +4,17 @@ function calculateRankings() {
   // Calculate all-time rankings
   calculateSeasonRankings();
   
-  // Update team rankings after individual rankings are calculated
-  updateTeamRankings();
+  // Update team rankings only if Team Mode is enabled
+  try {
+    if (typeof isTeamModeEnabled === 'function' && isTeamModeEnabled()) {
+      updateTeamRankings();
+    }
+  } catch (e) {
+    // If settings not available, skip team rankings
+  }
+
+  // Calculate today's rankings as well
+  calculateTodaysRankings();
 }
 
 function calculateSeasonRankings() {
@@ -237,11 +246,11 @@ function calculateTodaysRankings() {
   var gamesSheet = ss.getSheetByName("Games");
   var gamesData = gamesSheet.getDataRange().getValues();
   
-  var today = new Date();
-  today.setHours(0, 0, 0, 0);
-  
-  // Get player nicknames for mapping
-  var playerNicknames = getPlayerNicknames();
+  // Use configured timezone and day-cutoff hour (default 6 AM) so games after midnight count toward the prior "day"
+  var timezone = (typeof getConfiguredTimeZone === 'function') ? getConfiguredTimeZone() : (SpreadsheetApp.getActive().getSpreadsheetTimeZone() || Session.getScriptTimeZone() || 'Asia/Tokyo');
+  var cutoffHour = (typeof getDayCutoffHour === 'function') ? getDayCutoffHour() : 6;
+  var now = new Date();
+  var effectiveTodayStr = Utilities.formatDate(new Date(now.getTime() - cutoffHour * 60 * 60 * 1000), timezone, 'yyyy-MM-dd');
   
   var fourPlayerPlayers = {};
   var threePlayerPlayers = {};
@@ -249,10 +258,11 @@ function calculateTodaysRankings() {
   for (var i = 2; i < gamesData.length; i++) {
     var game = gamesData[i];
     var gameDate = new Date(game[0]);
-    gameDate.setHours(0, 0, 0, 0);
+    // Compute effective game day using the same cutoff logic
+    var effectiveGameStr = Utilities.formatDate(new Date(gameDate.getTime() - cutoffHour * 60 * 60 * 1000), timezone, 'yyyy-MM-dd');
     
-    // Skip if not today
-    if (gameDate.getTime() !== today.getTime()) continue;
+    // Skip if not the same effective day
+    if (effectiveGameStr !== effectiveTodayStr) continue;
     
     var playerScores = {};
     var players = [];
@@ -272,23 +282,36 @@ function calculateTodaysRankings() {
     for (var player in calculatedScores) {
       if (numPlayers === 4) {
         if (!fourPlayerPlayers[player]) {
-          fourPlayerPlayers[player] = { score: 0, games: 0 };
+          fourPlayerPlayers[player] = { score: 0, games: 0, first: 0, second: 0, third: 0, fourth: 0 };
         }
         fourPlayerPlayers[player].score += calculatedScores[player];
         fourPlayerPlayers[player].games++;
+
+        var place4 = getPlayerPlacement(player, playerScores);
+        if (place4 === 1) fourPlayerPlayers[player].first++;
+        else if (place4 === 2) fourPlayerPlayers[player].second++;
+        else if (place4 === 3) fourPlayerPlayers[player].third++;
+        else if (place4 === 4) fourPlayerPlayers[player].fourth++;
       } else if (numPlayers === 3) {
         if (!threePlayerPlayers[player]) {
-          threePlayerPlayers[player] = { score: 0, games: 0 };
+          threePlayerPlayers[player] = { score: 0, games: 0, first: 0, second: 0, third: 0 };
         }
         threePlayerPlayers[player].score += calculatedScores[player];
         threePlayerPlayers[player].games++;
+
+        var place3 = getPlayerPlacement(player, playerScores);
+        if (place3 === 1) threePlayerPlayers[player].first++;
+        else if (place3 === 2) threePlayerPlayers[player].second++;
+        else if (place3 === 3) threePlayerPlayers[player].third++;
       }
     }
   }
   
-  // Generate today's ranking sheets
-  generateSimpleRankingSheet(ss, fourPlayerPlayers, "4 Player Today Rankings");
-  generateSimpleRankingSheet(ss, threePlayerPlayers, "3 Player Today Rankings");
+  // Generate today's ranking sheets (use existing sheet names if they already exist)
+  var fourTodaySheetName = ss.getSheetByName("Today's Rankings (4 player)") ? "Today's Rankings (4 player)" : "4 Player Today Rankings";
+  var threeTodaySheetName = ss.getSheetByName("Today's Rankings (3 player)") ? "Today's Rankings (3 player)" : "3 Player Today Rankings";
+  generateRankingSheet(ss, fourPlayerPlayers, fourTodaySheetName, true);
+  generateRankingSheet(ss, threePlayerPlayers, threeTodaySheetName, false);
 }
 
 function generateSimpleRankingSheet(ss, playersData, sheetName) {

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .container { padding: 12px; }
+    label { display: flex; align-items: center; gap: 8px; }
+    .row { margin-bottom: 12px; }
+    button { padding: 6px 12px; cursor: pointer; }
+  </style>
+  <script>
+    function loadSettings() {
+      google.script.run.withSuccessHandler(function(settings){
+        document.getElementById('enableTeamMode').checked = !!(settings && settings.enableTeamMode);
+        if (settings && settings.timezone) {
+          document.getElementById('timezone').value = settings.timezone;
+        }
+        if (settings && typeof settings.dayCutoffHour === 'number') {
+          document.getElementById('dayCutoffHour').value = settings.dayCutoffHour;
+        }
+      }).getAppSettings();
+    }
+
+    function saveSettings() {
+      var settings = {
+        enableTeamMode: document.getElementById('enableTeamMode').checked,
+        timezone: document.getElementById('timezone').value,
+        dayCutoffHour: parseInt(document.getElementById('dayCutoffHour').value, 10)
+      };
+      document.getElementById('saveBtn').disabled = true;
+      google.script.run.withSuccessHandler(function(){
+        google.script.host.close();
+      }).saveAppSettings(settings);
+    }
+
+    window.addEventListener('load', loadSettings);
+  </script>
+  <title>Settings</title>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <label>
+        <input type="checkbox" id="enableTeamMode" />
+        Enable Team Mode
+      </label>
+    </div>
+    <div class="row">
+      <label>
+        Timezone:
+        <input type="text" id="timezone" placeholder="e.g. Asia/Tokyo" />
+      </label>
+    </div>
+    <div class="row">
+      <label>
+        Day cutoff hour:
+        <input type="number" id="dayCutoffHour" min="0" max="23" step="1" />
+        <span>(0-23, default 6)</span>
+      </label>
+    </div>
+    <div>
+      <button id="saveBtn" onclick="saveSettings()">Save</button>
+      <button onclick="google.script.host.close()">Cancel</button>
+    </div>
+  </div>
+</body>
+</html>
+
+

@@ -64,6 +64,11 @@
     button:hover {
       background-color: #45a049;
     }
+    button.loading {
+      background-color: #d9534f;
+      cursor: not-allowed;
+      opacity: 0.9;
+    }
   </style>
 </head>
 <body>
@@ -174,6 +179,12 @@
       // Prevent double submission
       if (isSubmitting) return;
       isSubmitting = true;
+      const submitButton = document.getElementById('submitButton');
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.classList.add('loading');
+        submitButton.textContent = 'Submitting...';
+      }
       
       const formData = new FormData(document.getElementById('form'));
       const data = {};
@@ -197,17 +208,34 @@
       
       google.script.run
         .withSuccessHandler(function(result) {
-          // Close dialog immediately after game is added
-          google.script.host.close();
-          
-          // Then calculate rankings (will show toast notification)
-          google.script.run.showToastAndCalculateRankings();
+          // After the game is added, calculate rankings and only close when done
+          google.script.run
+            .withSuccessHandler(function() {
+              google.script.host.close();
+            })
+            .withFailureHandler(function(error) {
+              alert('Error updating rankings: ' + error.message);
+              isSubmitting = false;
+              const submitButton = document.getElementById('submitButton');
+              if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.classList.remove('loading');
+                submitButton.textContent = 'Submit';
+              }
+            })
+            .showToastAndCalculateRankings();
         })
         .withFailureHandler(function(error) {
           alert('Error adding game: ' + error.message);
           isSubmitting = false;
+          const submitButton = document.getElementById('submitButton');
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.classList.remove('loading');
+            submitButton.textContent = 'Submit';
+          }
         })
-        .addGameAndUpdateRankings(gameData);
+        .addGame(gameData);
     }
     
     google.script.run

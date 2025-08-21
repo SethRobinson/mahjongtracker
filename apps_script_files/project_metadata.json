@@ -52,5 +52,15 @@
       "name": "seatingDialog",
       "type": "HTML"
     }
+    ,
+    {
+      "name": "settings",
+      "type": "SERVER_JS"
+    }
+    ,
+    {
+      "name": "settingsDialog",
+      "type": "HTML"
+    }
   ]
 }

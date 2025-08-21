@@ -101,6 +101,9 @@
 <body>
   <div class="container">
     <h2>Create Table Seating Plan</h2>
+    <div id="teamModeWarning" style="display:none; color:#b71c1c; background:#ffebee; padding:8px; border-radius:4px; margin-bottom:10px;">
+      Team Mode is disabled. Enable it in Settings to use seating plans.
+    </div>
     <p class="description">Generate a seating plan that ensures players from the same team never sit together and minimizes repeat pairings.  This can take MINUTES to compute!</p>
     
     <div class="info" id="teamInfo">
@@ -133,6 +136,11 @@
   </div>
   
   <script>
+    google.script.run.withSuccessHandler(function(settings){
+      if (!settings || settings.enableTeamMode !== true) {
+        document.getElementById('teamModeWarning').style.display = 'block';
+      }
+    }).getAppSettings();
     let teamData = null;
     
     // Load team information on startup

@@ -1,5 +1,9 @@
 // Seating Plan functionality
 function showSeatingPlanDialog() {
+  if (typeof isTeamModeEnabled === 'function' && !isTeamModeEnabled()) {
+    SpreadsheetApp.getUi().alert('Team Mode is disabled. Enable it in Settings to use seating plans.');
+    return;
+  }
   var html = HtmlService.createHtmlOutputFromFile('seatingDialog')
       .setWidth(400)
       .setHeight(300);
@@ -9,6 +13,9 @@ function showSeatingPlanDialog() {
 
 function generateSeatingPlan(numTables, numRounds) {
   try {
+    if (typeof isTeamModeEnabled === 'function' && !isTeamModeEnabled()) {
+      throw new Error('Team Mode is disabled. Enable it in Settings first.');
+    }
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var teamsSheet = ss.getSheetByName("Teams");
     var playersSheet = ss.getSheetByName("Players");
